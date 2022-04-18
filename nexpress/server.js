@@ -3,32 +3,53 @@ import path from "path";
 import fs, { appendFileSync } from "fs";
 import { isAsyncFunction } from "util/types";
 import { assert } from "console";
-import minimal from "./src/minimal";
+// import express from "express";
+//
+let express = require("express");
 
-const app = minimal();
+// let user = require("./router/users");
+// let home = require("./router");
+// let service = require("./router/services");
+// let contact = require("./router/contact");
+// let about = require("./router/about");
+// app.use("/users", user);
+// app.use("/home", home);
+// app.use("/contact", contact);
+// app.use("/services", service);
+// app.use("/about", about);
 
+const app = express();
 app.use(cors());
-
-app.get("/about", (req, res) => {
-  res.send("I am the about page via GET");
-});
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  fs.readFile(path.resolve(__dirname, "..", "public", "index.html"),
-    (err, data) => {
-      if (err) {
-        console.log("Get / Errored!");
-        console.log(err);
-        return res.status(500).send("Error Occured");
-      }
-      return res.status(200).send(data);
-    });
+  res.send("This is home page");
+});
+
+app.get("/about", (req, res) => {
+  res.send("about page");
+});
+
+app.get("/contact", (req, res) => {
+  res.send("this is our contact page");
+});
+
+app.get("/update_users/:userId", (req, res) => {
+  res.send(req.params.userId);
+});
+
+app.put("/users/:username", (req, res) => {
+  const user = req.params.username;
+
+  if (!user) return res.status(404).json({});
+
+  res.json(user);
+});
+
+app.delete("/delete_user", (req, res) => {
+  res.send("deleted list of users");
 });
 
 const server = app.listen(9000, () => {
   console.log("Server is running");
 });
-
-export function addNumbersTestExample(a, b) {
-  return a + b;
-}

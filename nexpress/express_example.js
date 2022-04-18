@@ -34,7 +34,6 @@ let DoggrDatabase = {
 
 console.log(DoggrDatabase);
 
-
 // Returns a response of 200 if user exists, 404 otherwise
 app.get("/users/:userId", (req, res) => {
   let id = req.params.userId;
@@ -81,7 +80,6 @@ app.get("/users/:userId", (req, res) => {
 app.put("/users/", (req, res) => {
   //let id = Number(req.params.userId);
   let requestJson = req.body;
-  
 
   console.log("Request json is:", requestJson);
 
@@ -89,10 +87,6 @@ app.put("/users/", (req, res) => {
   res.status(200).send("User added to database");
   console.log(DoggrDatabase.users);
 });
-
-
-
-
 
 // app.get("/about", (req, res) => {
 //   res.send("I am the about page via GET");
